@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from flask import jsonify
 from flask_pymongo import PyMongo
 
 
@@ -20,9 +21,23 @@ def create_app():
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    def has_account(phone_or_email):
+        pass
+
+    @app.route('/check_user/<phone_or_email>', methods=['POST'])
+    def check_user(phone_or_email):
+        users_db = mongo.db.users
+
+        # Check if user info is already id DB
+        user_entry = users_db.find_one({'login': phone_or_email})
+        if user_entry:
+            # Return result from DB
+            output = {'Account exist': True}
+        else:
+            # Send request and write to DB
+            output = {'Account exist': False}
+            phone_id = users_db.insert({'phone': phone, 'Account exist': True})
+
+        return jsonify({'result': output})
 
     return app
