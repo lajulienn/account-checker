@@ -29,8 +29,8 @@ class SiteAnalyser:
 
     XIAOMI_DATA = {
         'PAGE_TITLES': {
-            'account_exists': 'Mi аккаунт - Проверка подлинности Аккаунта',
-            'account_not_exists': 'Mi аккаунт -  Сбросить пароль ',
+            'account_exists': ['Mi аккаунт - Проверка подлинности Аккаунта', 'Mi Account - Account Authentication'],
+            'account_not_exists': ['Mi аккаунт -  Сбросить пароль ', 'Mi Account - Reset password '],
         },
     }
 
@@ -59,9 +59,9 @@ class SiteAnalyser:
             post_response = session.post(self.url, data={'id': phone_or_email, })
             soup = bs(post_response.text, 'lxml')
             title = soup.find_all('title')[0].string
-            if title == self.XIAOMI_DATA.get('PAGE_TITLES').get('account_exists'):
+            if title in self.XIAOMI_DATA.get('PAGE_TITLES').get('account_exists'):
                 return True
-            elif title == self.XIAOMI_DATA.get('PAGE_TITLES').get('account_not_exists'):
+            elif title in self.XIAOMI_DATA.get('PAGE_TITLES').get('account_not_exists'):
                 return False
             else:
                 raise PageTitleError('Page title at {url} is unknown: {title}.'.format(url=self.url, title=title))
