@@ -1,7 +1,7 @@
 import os
-import requests
-
 from flask import Flask
+
+from checker import checker
 
 
 def create_app():
@@ -20,7 +20,6 @@ def create_app():
         pass
 
     # apply the blueprints to the app
-    from checker import checker
     app.register_blueprint(checker.bp)
 
     return app
