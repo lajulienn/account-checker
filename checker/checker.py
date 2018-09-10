@@ -84,8 +84,8 @@ def check_user(phone_or_email):
 
     try:
         account_exists = xiaomi.account_exists(phone_or_email)
-    except PageTitleError:
-        return jsonify({'result': 'Something went wrong...'})
+    except PageTitleError as e:
+        return jsonify({'result': e.message})
 
     if account_exists:
         account_info = {'Account exists': True}
