@@ -9,7 +9,7 @@ app = Flask(__name__, instance_relative_config=True)
 app.config.from_mapping(
     SECRET_KEY='dev',
     MONGO_DBNAME='checker_db',
-    MONGO_URI='mongodb://localhost:27017/checker_db',
+    MONGO_URI=os.environ['MONGODB_URI'],
 )
 
 # ensure the instance folder exists
